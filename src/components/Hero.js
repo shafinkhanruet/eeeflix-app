@@ -23,6 +23,11 @@ const HeroContainer = styled.div`
     align-items: flex-start;
     padding-top: 80px;
   }
+  
+  @media (max-width: ${props => props.theme.breakpoints.mobile}) {
+    min-height: 85vh;
+    padding-top: 70px;
+  }
 `;
 
 const HeroBackground = styled.div`
@@ -36,6 +41,10 @@ const HeroBackground = styled.div`
   background-position: center 30%;
   filter: blur(1.5px) brightness(0.9);
   z-index: -1;
+  
+  @media (max-width: ${props => props.theme.breakpoints.mobile}) {
+    background-position: center 25%;
+  }
   
   &:after {
     content: '';
@@ -58,6 +67,23 @@ const HeroBackground = styled.div`
       rgba(0, 0, 0, 0.4) 50%,
       rgba(0, 0, 0, 0.7) 100%
     );
+    
+    @media (max-width: ${props => props.theme.breakpoints.mobile}) {
+      background: linear-gradient(
+        90deg,
+        rgba(0, 0, 0, 0.9) 0%,
+        rgba(0, 0, 0, 0.8) 20%,
+        rgba(0, 0, 0, 0.7) 60%,
+        rgba(0, 0, 0, 0.6) 100%
+      ),
+      linear-gradient(
+        0deg,
+        rgba(0, 0, 0, 0.9) 0%,
+        rgba(0, 0, 0, 0.7) 20%,
+        rgba(0, 0, 0, 0.5) 50%,
+        rgba(0, 0, 0, 0.8) 100%
+      );
+    }
   }
 `;
 
@@ -71,12 +97,13 @@ const HeroContent = styled(motion.div)`
   
   @media (max-width: ${props => props.theme.breakpoints.tablet}) {
     padding: 0 2rem;
-    margin-left: 2rem;
+    margin-left: 1.5rem;
   }
   
   @media (max-width: ${props => props.theme.breakpoints.mobile}) {
-    padding: 0 1.5rem;
+    padding: 0 1.25rem;
     margin-left: 0;
+    margin-top: 1rem;
   }
 `;
 
@@ -85,6 +112,11 @@ const HeroTextContent = styled(motion.div)`
   flex-direction: column;
   gap: 1rem;
   max-width: 550px;
+  
+  @media (max-width: ${props => props.theme.breakpoints.mobile}) {
+    gap: 0.75rem;
+    max-width: 100%;
+  }
 `;
 
 const CircuitLogo = styled(motion.img)`
@@ -111,6 +143,15 @@ const BrandTitle = styled(motion.h1)`
   span {
     color: #E50914;
   }
+  
+  @media (max-width: ${props => props.theme.breakpoints.tablet}) {
+    font-size: 2.8rem;
+  }
+  
+  @media (max-width: ${props => props.theme.breakpoints.mobile}) {
+    font-size: 2.2rem;
+    margin-bottom: 0.25rem;
+  }
 `;
 
 const TopTen = styled(motion.div)`
@@ -119,6 +160,11 @@ const TopTen = styled(motion.div)`
   gap: 0.5rem;
   margin-top: 0.5rem;
   margin-bottom: 0.5rem;
+  
+  @media (max-width: ${props => props.theme.breakpoints.mobile}) {
+    margin-top: 0.25rem;
+    margin-bottom: 0.25rem;
+  }
 `;
 
 const TopTenBadge = styled.div`
@@ -143,8 +189,15 @@ const HeroDescription = styled(motion.p)`
   max-width: 550px;
   text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
   
-  @media (max-width: ${props => props.theme.breakpoints.mobile}) {
+  @media (max-width: ${props => props.theme.breakpoints.tablet}) {
     font-size: 1rem;
+    line-height: 1.5;
+  }
+  
+  @media (max-width: ${props => props.theme.breakpoints.mobile}) {
+    font-size: 0.95rem;
+    line-height: 1.4;
+    margin: 0.25rem 0;
   }
 `;
 
@@ -153,6 +206,12 @@ const MaturityContainer = styled(motion.div)`
   align-items: center;
   gap: 0.8rem;
   margin: 0.5rem 0 1rem;
+  
+  @media (max-width: ${props => props.theme.breakpoints.mobile}) {
+    margin: 0.25rem 0 0.75rem;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+  }
 `;
 
 const MaturityRating = styled.div`
@@ -163,11 +222,20 @@ const MaturityRating = styled.div`
   padding: 0.2rem 0.5rem;
   font-size: 0.9rem;
   font-weight: 500;
+  
+  @media (max-width: ${props => props.theme.breakpoints.mobile}) {
+    font-size: 0.8rem;
+    padding: 0.15rem 0.4rem;
+  }
 `;
 
 const Tags = styled.span`
   color: #ddd;
   font-size: 0.9rem;
+  
+  @media (max-width: ${props => props.theme.breakpoints.mobile}) {
+    font-size: 0.8rem;
+  }
 `;
 
 const ButtonContainer = styled(motion.div)`
@@ -178,6 +246,9 @@ const ButtonContainer = styled(motion.div)`
   @media (max-width: ${props => props.theme.breakpoints.mobile}) {
     flex-direction: row;
     flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-top: 0.75rem;
+    width: 100%;
   }
 `;
 
@@ -204,6 +275,18 @@ const NetflixPlayButton = styled(motion.button)`
   svg {
     font-size: 1.3rem;
   }
+  
+  @media (max-width: ${props => props.theme.breakpoints.mobile}) {
+    padding: 0.4rem 1.2rem;
+    font-size: 1rem;
+    height: 36px;
+    flex: 1;
+    min-width: 120px;
+    
+    svg {
+      font-size: 1.1rem;
+    }
+  }
 `;
 
 const NetflixMoreInfoButton = styled(motion.button)`
@@ -228,6 +311,18 @@ const NetflixMoreInfoButton = styled(motion.button)`
   
   svg {
     font-size: 1.3rem;
+  }
+  
+  @media (max-width: ${props => props.theme.breakpoints.mobile}) {
+    padding: 0.4rem 1.2rem;
+    font-size: 1rem;
+    height: 36px;
+    flex: 1;
+    min-width: 120px;
+    
+    svg {
+      font-size: 1.1rem;
+    }
   }
 `;
 
