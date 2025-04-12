@@ -84,17 +84,29 @@ const HeroTextContent = styled(motion.div)`
   max-width: 550px;
 `;
 
-const NetflixLogo = styled(motion.img)`
-  width: 20rem;
-  margin-bottom: 0.5rem;
-  filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.7));
+const CircuitLogo = styled(motion.img)`
+  height: 80px;
+  margin-bottom: 1rem;
+  filter: drop-shadow(0 2px 10px rgba(0, 0, 0, 0.5));
   
   @media (max-width: ${props => props.theme.breakpoints.tablet}) {
-    width: 16rem;
+    height: 60px;
   }
   
   @media (max-width: ${props => props.theme.breakpoints.mobile}) {
-    width: 14rem;
+    height: 50px;
+  }
+`;
+
+const BrandTitle = styled(motion.h1)`
+  font-size: 3.5rem;
+  font-weight: 800;
+  margin-bottom: 0.5rem;
+  color: #FFFFFF;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.7);
+  
+  span {
+    color: #E50914;
   }
 `;
 
@@ -224,6 +236,7 @@ const Hero = () => {
     triggerOnce: true
   });
   const [isMounted, setIsMounted] = useState(false);
+  const [logoLoaded, setLogoLoaded] = useState(true);
   
   // Set mounted state after initial render
   useEffect(() => {
@@ -265,6 +278,10 @@ const Hero = () => {
     }
   };
   
+  const handleLogoError = () => {
+    setLogoLoaded(false);
+  };
+  
   return (
     <HeroContainer ref={ref}>
       <HeroBackground />
@@ -275,12 +292,22 @@ const Hero = () => {
         animate={controls}
       >
         <HeroTextContent>
-          <NetflixLogo 
-            src="https://preview.fontget.com/tmp/67fac987c25b4.png"
-            alt="Circuit of Minds Logo"
-            variants={itemVariants}
-            style={{ y: titleY }}
-          />
+          {logoLoaded ? (
+            <CircuitLogo 
+              src="/assets/images/logos/circuits-of-minds-logo.png"
+              alt="Circuit of Minds Logo"
+              variants={itemVariants}
+              style={{ y: titleY }}
+              onError={handleLogoError}
+            />
+          ) : (
+            <BrandTitle 
+              variants={itemVariants}
+              style={{ y: titleY }}
+            >
+              Circuit of <span>Minds</span>
+            </BrandTitle>
+          )}
           
           <TopTen variants={itemVariants}>
             <TopTenBadge>#1</TopTenBadge>

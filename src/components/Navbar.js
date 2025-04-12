@@ -31,10 +31,11 @@ const NavContent = styled.div`
 `;
 
 const Logo = styled(Link)`
-  text-decoration: none;
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  margin-right: 2rem;
+  text-decoration: none;
+  z-index: 2;
 `;
 
 const LogoImage = styled.img`
@@ -44,6 +45,20 @@ const LogoImage = styled.img`
   
   &:hover {
     transform: scale(1.05);
+  }
+`;
+
+const LogoText = styled.div`
+  font-size: 2rem;
+  font-weight: 800;
+  color: #E50914;
+  letter-spacing: 1px;
+  display: flex;
+  align-items: center;
+  
+  span {
+    color: #FFFFFF;
+    font-weight: 600;
   }
 `;
 
@@ -120,6 +135,7 @@ const Navbar = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const location = useLocation();
   const { playSound } = useContext(SoundContext);
+  const [logoLoaded, setLogoLoaded] = useState(true);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -145,6 +161,10 @@ const Navbar = () => {
   const handleMenuToggle = () => {
     playSound('click');
     setMobileMenuOpen(!mobileMenuOpen);
+  };
+
+  const handleLogoError = () => {
+    setLogoLoaded(false);
   };
 
   const navVariants = {
@@ -191,10 +211,17 @@ const Navbar = () => {
           onClick={() => playSound('click')}
           onMouseEnter={() => playSound('hover')}
         >
-          <LogoImage 
-            src="https://preview.fontget.com/tmp/67fabb0a7fd49.png" 
-            alt="EEEFlix Logo" 
-          />
+          {!logoLoaded ? (
+            <LogoText>
+              EEE<span>FLIX</span>
+            </LogoText>
+          ) : (
+            <LogoImage 
+              src="/assets/images/logos/eeeflix-logo.png" 
+              alt="EEEFlix Logo" 
+              onError={handleLogoError}
+            />
+          )}
         </Logo>
         
         <NavLinks>
