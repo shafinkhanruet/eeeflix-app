@@ -5,6 +5,9 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { FaBars, FaTimes, FaGraduationCap } from 'react-icons/fa';
 import { SoundContext } from '../contexts/SoundContext';
 
+// Import the logo directly
+import eeeflixLogo from '../assets/images/logos/eeeflix-logo.png';
+
 const NavContainer = styled(motion.nav)`
   position: fixed;
   top: 0;
@@ -217,7 +220,7 @@ const Navbar = () => {
             </LogoText>
           ) : (
             <LogoImage 
-              src="/assets/images/logos/eeeflix-logo.png" 
+              src={eeeflixLogo}
               alt="EEEFlix Logo" 
               onError={handleLogoError}
             />

@@ -5,6 +5,9 @@ import { FaPlay, FaInfoCircle } from 'react-icons/fa';
 import { useInView } from 'react-intersection-observer';
 import { SoundContext } from '../contexts/SoundContext';
 
+// Import the logo directly
+import circuitsLogo from '../assets/images/logos/circuits-of-minds-logo.png';
+
 const HeroContainer = styled.div`
   position: relative;
   min-height: 90vh;
@@ -294,7 +297,7 @@ const Hero = () => {
         <HeroTextContent>
           {logoLoaded ? (
             <CircuitLogo 
-              src="/assets/images/logos/circuits-of-minds-logo.png"
+              src={circuitsLogo}
               alt="Circuit of Minds Logo"
               variants={itemVariants}
               style={{ y: titleY }}
