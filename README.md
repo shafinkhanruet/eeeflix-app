@@ -55,5 +55,6 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 ## Contact
 
 For any inquiries, please reach out to:
-- Email: info@eeeflix.com
+- Developer: [Shafin Khan](https://github.com/shafinkhanruet)
+- Email: shafin.sjs@gmail.com
 - Department of Electrical & Electronic Engineering, RUET, Rajshahi, Bangladesh
