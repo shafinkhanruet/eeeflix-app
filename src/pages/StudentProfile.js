@@ -614,6 +614,9 @@ const StudentProfile = () => {
   useEffect(() => {
     setIsMounted(true);
     
+    // Scroll to top when component mounts or ID changes
+    window.scrollTo(0, 0);
+    
     const fetchStudentData = async () => {
       try {
         setLoading(true);
