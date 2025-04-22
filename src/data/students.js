@@ -219,10 +219,10 @@ const createStudentData = () => {
       students.push({
         id: id,
         name: studentNames[i],
-        image: getAvatarImage(i), // Serial assignment: student 0 gets avatar-1
+        image: getAvatarImage(i),
         contactInfo: generateContactInfo(id, studentNames[i]),
         description: descriptions[descriptionIndex],
-        quote: "সবার বিচার হবে",
+        quote: "সবার বিচার হবে", // Bengali text meaning "Everyone will be judged"
         year: "2023",
         semester: "Spring"
       });
