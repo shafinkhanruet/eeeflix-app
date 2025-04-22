@@ -17,6 +17,19 @@ const PageOverlay = styled(motion.div)`
   bottom: 0;
   background: #000000;
   z-index: -1;
+  
+  &:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(circle at 15% 50%, rgba(229, 9, 20, 0.08) 0%, transparent 50%),
+                radial-gradient(circle at 85% 30%, rgba(229, 9, 20, 0.05) 0%, transparent 50%);
+    z-index: -1;
+    opacity: 0.7;
+  }
 `;
 
 const ProfileContainer = styled(motion.div)`
@@ -35,7 +48,7 @@ const BackButton = styled(motion.button)`
   position: absolute;
   top: 20px;
   left: 20px;
-  background: rgba(18, 18, 18, 0.7);
+  background: rgba(18, 18, 18, 0.8);
   color: white;
   border: none;
   border-radius: 50%;
@@ -46,23 +59,25 @@ const BackButton = styled(motion.button)`
   justify-content: center;
   cursor: pointer;
   z-index: 10;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-  transition: background 0.3s ease, transform 0.2s ease;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   text-decoration: none;
   
   &:hover {
-    background: rgba(229, 9, 20, 0.8);
-    transform: scale(1.1);
+    background: rgba(229, 9, 20, 0.9);
+    transform: scale(1.1) rotate(-5deg);
+    box-shadow: 0 5px 20px rgba(229, 9, 20, 0.4);
   }
   
   svg {
     width: 24px;
     height: 24px;
+    filter: drop-shadow(0 2px 3px rgba(0, 0, 0, 0.2));
   }
 `;
 
 const ProfileCard = styled(motion.div)`
-  background: linear-gradient(to bottom, rgba(30, 30, 30, 0.9), rgba(20, 20, 20, 0.95));
+  background: linear-gradient(to bottom, rgba(30, 30, 30, 0.95), rgba(15, 15, 15, 0.98));
   border-radius: 16px;
   padding: 2.5rem;
   width: 100%;
@@ -73,8 +88,38 @@ const ProfileCard = styled(motion.div)`
   position: relative;
   overflow: hidden;
   border: 1px solid rgba(100, 100, 100, 0.2);
-  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8);
   z-index: 2;
+  backdrop-filter: blur(10px);
+  
+  &:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 100%;
+    background: linear-gradient(to right, transparent, rgba(229, 9, 20, 0.05), transparent);
+    background-size: 200% 100%;
+    animation: shimmer 8s infinite linear;
+    pointer-events: none;
+  }
+  
+  &:after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(229, 9, 20, 0.6), transparent);
+    z-index: 1;
+  }
+  
+  @keyframes shimmer {
+    0% { background-position: -200% 0; }
+    100% { background-position: 200% 0; }
+  }
 `;
 
 const AvatarOuterContainer = styled(motion.div)`
@@ -112,11 +157,12 @@ const AvatarContainer = styled(motion.div)`
   z-index: 1;
   background-color: #181818;
   box-shadow: 0 0 25px rgba(229, 9, 20, 0.6);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   
   &:hover {
-    transform: scale(1.05);
-    box-shadow: 0 0 30px rgba(229, 9, 20, 0.8);
+    transform: scale(1.08);
+    box-shadow: 0 0 35px rgba(229, 9, 20, 0.8);
+    border-color: #FF0A16;
   }
   
   &::after {
@@ -130,21 +176,30 @@ const AvatarContainer = styled(motion.div)`
     box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.8);
     pointer-events: none;
   }
+  
+  img {
+    transition: transform 0.5s ease;
+  }
+  
+  &:hover img {
+    transform: scale(1.1);
+  }
 `;
 
 const StatusBadge = styled(motion.div)`
   position: absolute;
   bottom: 0;
   right: 0;
-  background-color: #E50914;
+  background: linear-gradient(135deg, #E50914, #B20710);
   color: white;
   font-size: 0.8rem;
   padding: 0.3rem 0.6rem;
   border-radius: 12px;
   font-weight: bold;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
   transform-origin: bottom right;
   letter-spacing: 1px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
 `;
 
 const StudentName = styled(motion.h1)`
@@ -173,43 +228,21 @@ const StudentId = styled(motion.h2)`
   color: #B3B3B3;
   text-align: center;
   letter-spacing: 1px;
-`;
-
-const AchievementsContainer = styled(motion.div)`
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 0.8rem;
-  margin-bottom: 2rem;
-  width: 100%;
-  max-width: 600px;
-`;
-
-const AchievementBadge = styled(motion.div)`
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  background-color: rgba(229, 9, 20, 0.2);
-  color: #FFFFFF;
-  padding: 0.4rem 1rem;
-  border-radius: 20px;
-  font-size: 0.9rem;
-  font-weight: 500;
-  letter-spacing: 0.5px;
-  border: 1px solid rgba(229, 9, 20, 0.5);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-  transition: all 0.3s ease;
+  background: linear-gradient(to right, #B3B3B3, #FFFFFF, #B3B3B3);
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  position: relative;
   
-  &:hover {
-    background-color: rgba(229, 9, 20, 0.3);
-    transform: translateY(-3px) scale(1.05);
-    box-shadow: 0 6px 12px rgba(229, 9, 20, 0.2);
-    border-color: rgba(229, 9, 20, 0.8);
-  }
-  
-  svg {
-    color: #E50914;
-    font-size: 1rem;
+  &:after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    height: 1px;
+    width: 60px;
+    background: linear-gradient(to right, transparent, rgba(229, 9, 20, 0.5), transparent);
   }
 `;
 
@@ -226,21 +259,56 @@ const ProfileSections = styled.div`
 `;
 
 const InfoSection = styled(motion.div)`
-  background: rgba(25, 25, 25, 0.8);
+  background: rgba(25, 25, 25, 0.9);
   border-radius: 12px;
   padding: 1.8rem;
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
   border: 1px solid rgba(80, 80, 80, 0.3);
-  transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   height: 100%;
   display: flex;
   flex-direction: column;
+  position: relative;
+  overflow: hidden;
+  backdrop-filter: blur(5px);
   
   &:hover {
-    background: rgba(30, 30, 30, 0.9);
-    transform: translateY(-5px);
-    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4);
-    border-color: rgba(100, 100, 100, 0.5);
+    background: rgba(30, 30, 30, 0.95);
+    transform: translateY(-10px) scale(1.02);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+    border-color: rgba(229, 9, 20, 0.3);
+  }
+  
+  &:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 5px;
+    background: linear-gradient(to right, #E50914, transparent);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+  
+  &:hover:before {
+    opacity: 1;
+  }
+  
+  &:after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 100px;
+    height: 100px;
+    background: radial-gradient(circle, rgba(229, 9, 20, 0.1), transparent 70%);
+    opacity: 0;
+    transition: opacity 0.5s ease;
+  }
+  
+  &:hover:after {
+    opacity: 1;
   }
 `;
 
@@ -254,10 +322,29 @@ const SectionTitle = styled.h3`
   gap: 0.6rem;
   padding-bottom: 0.6rem;
   border-bottom: 1px solid rgba(229, 9, 20, 0.3);
+  position: relative;
   
   svg {
     color: #E50914;
     font-size: 1.3rem;
+    filter: drop-shadow(0 2px 3px rgba(0, 0, 0, 0.3));
+  }
+  
+  &:after {
+    content: '';
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    width: 30%;
+    height: 2px;
+    background: #E50914;
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.4s ease;
+  }
+  
+  ${InfoSection}:hover &:after {
+    transform: scaleX(1);
   }
 `;
 
@@ -277,25 +364,49 @@ const InfoItem = styled.div`
   padding: 0.6rem 0;
   border-bottom: 1px solid rgba(100, 100, 100, 0.2);
   transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
   
   &:hover {
     color: #FFFFFF;
-    transform: translateX(5px);
+    transform: translateX(8px);
     border-bottom-color: rgba(229, 9, 20, 0.4);
+  }
+  
+  &:before {
+    content: '';
+    position: absolute;
+    left: -20px;
+    top: 0;
+    height: 100%;
+    width: 2px;
+    background-color: #E50914;
+    transition: transform 0.3s ease;
+    transform: translateX(0);
+  }
+  
+  &:hover:before {
+    transform: translateX(20px);
   }
   
   svg {
     color: #E50914;
     font-size: 1.2rem;
     min-width: 20px;
+    filter: drop-shadow(0 2px 3px rgba(0, 0, 0, 0.2));
+    transition: transform 0.3s ease;
+  }
+  
+  &:hover svg {
+    transform: scale(1.2);
   }
 `;
 
-const SocialLinks = styled.div`
+const SocialLinks = styled(motion.div)`
   display: flex;
   justify-content: center;
   gap: 1.5rem;
-  margin-top: 1rem;
+  margin-top: 1.5rem;
 `;
 
 const SocialLink = styled(motion.a)`
@@ -312,15 +423,16 @@ const SocialLink = styled(motion.a)`
   border: 1px solid rgba(229, 9, 20, 0.3);
   position: relative;
   overflow: hidden;
-  transition: all 0.3s ease;
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   
   &:hover {
     color: #FFFFFF;
-    transform: translateY(-5px);
-    box-shadow: 0 8px 20px rgba(229, 9, 20, 0.3);
+    transform: translateY(-8px) scale(1.15);
+    box-shadow: 0 15px 25px rgba(229, 9, 20, 0.5);
+    background: linear-gradient(135deg, rgba(229, 9, 20, 0.5), rgba(229, 9, 20, 0.7));
     
     &:before {
-      transform: translateX(100%);
+      transform: translateX(100%) rotate(45deg);
     }
   }
   
@@ -334,7 +446,7 @@ const SocialLink = styled(motion.a)`
     background: linear-gradient(
       to right,
       transparent,
-      rgba(255, 255, 255, 0.3),
+      rgba(255, 255, 255, 0.5),
       transparent
     );
     transform: skewX(-25deg);
@@ -400,31 +512,43 @@ const NotFound = styled.div`
 // Animation Variants
 const overlayVariants = {
   hidden: { opacity: 0 },
-  visible: { opacity: 1, transition: { duration: 0.6 } }
-  };
+  visible: { 
+    opacity: 1, 
+    transition: { 
+      duration: 0.8,
+      ease: "easeInOut"
+    } 
+  }
+};
   
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: { 
-      opacity: 1,
-      transition: {
-      staggerChildren: 0.12,
-      delayChildren: 0.2,
-      duration: 0.6,
-      ease: "easeOut"
-      }
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: { 
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.15,
+      delayChildren: 0.3,
+      duration: 0.8,
+      ease: [0.25, 0.1, 0.25, 1.0]
     }
-  };
+  }
+};
   
-  const itemVariants = {
-  hidden: { opacity: 0, y: 30 },
-    visible: {
+const itemVariants = {
+  hidden: { 
+    opacity: 0, 
+    y: 40,
+    filter: "blur(8px)" 
+  },
+  visible: {
     opacity: 1,
     y: 0,
+    filter: "blur(0px)",
     transition: {
       type: "spring",
-      stiffness: 300,
-      damping: 15
+      stiffness: 120,
+      damping: 20,
+      mass: 0.8
     }
   }
 };
@@ -432,62 +556,161 @@ const overlayVariants = {
 const pulseVariants = {
   pulse: {
     scale: [1, 1.05, 1],
+    boxShadow: [
+      "0 0 15px rgba(229, 9, 20, 0.4)", 
+      "0 0 25px rgba(229, 9, 20, 0.7)", 
+      "0 0 15px rgba(229, 9, 20, 0.4)"
+    ],
     transition: {
-      duration: 2,
+      duration: 3,
       repeat: Infinity,
-      repeatType: "reverse"
+      repeatType: "mirror",
+      ease: "easeInOut"
+    }
+  }
+};
+
+const cardHoverVariants = {
+  initial: { 
+    y: 0,
+    boxShadow: "0 20px 50px rgba(0, 0, 0, 0.8)",
+    transition: { 
+      duration: 0.4, 
+      ease: [0.25, 0.1, 0.25, 1.0]
+    }
+  },
+  hover: { 
+    y: -15, 
+    boxShadow: "0 30px 70px rgba(0, 0, 0, 0.9)",
+    transition: { 
+      duration: 0.5, 
+      ease: [0.25, 0.1, 0.25, 1.0]
+    }
+  }
+};
+
+const floatAnimation = {
+  initial: { y: 0 },
+  animate: {
+    y: [0, -10, 0],
+    transition: {
+      duration: 6,
+      repeat: Infinity,
+      repeatType: "mirror",
+      ease: "easeInOut"
     }
   }
 };
 
 const QuoteContainer = styled(motion.div)`
-  background: linear-gradient(90deg, rgba(20, 20, 20, 0.8), rgba(229, 9, 20, 0.1), rgba(20, 20, 20, 0.8));
-  padding: 1.2rem;
+  background: linear-gradient(135deg, rgba(25, 25, 25, 0.9), rgba(229, 9, 20, 0.15), rgba(25, 25, 25, 0.9));
+  padding: 1.5rem;
   border-radius: 10px;
-  margin: 0.5rem 0 2rem;
+  margin: 0.75rem 0 2rem;
   text-align: center;
-  font-family: 'Montserrat', sans-serif;
-  font-style: italic;
-  color: #E5E5E5;
+  font-family: 'Hind Siliguri', sans-serif !important;
+  font-style: normal;
+  color: #FFFFFF;
   position: relative;
   line-height: 1.6;
-  font-size: 1.05rem;
+  font-size: 1rem;
   width: 100%;
-  max-width: 600px;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
-  border: 1px solid rgba(70, 70, 70, 0.4);
+  max-width: 580px;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(229, 9, 20, 0.25);
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  word-break: normal;
+  letter-spacing: 0.02em;
+  backdrop-filter: blur(10px);
+  transform-style: preserve-3d;
+  perspective: 1000px;
+  transform: translateZ(0);
+  
+  &:before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    background: linear-gradient(45deg, rgba(229, 9, 20, 0.2), transparent, rgba(229, 9, 20, 0.2));
+    border-radius: 11px;
+    z-index: -1;
+    filter: blur(8px);
+    opacity: 0.7;
+    animation: glowPulse 3s infinite alternate;
+  }
+  
+  @keyframes glowPulse {
+    0% { opacity: 0.4; filter: blur(8px); }
+    100% { opacity: 0.7; filter: blur(10px); }
+  }
   
   @media (max-width: 768px) {
     font-size: 0.95rem;
-    padding: 1rem;
+    padding: 1.2rem;
+  }
+  
+  /* Add specific styling for Bengali text */
+  &:lang(bn), & *:lang(bn) {
+    font-family: 'Hind Siliguri', sans-serif !important;
+    direction: ltr;
+    unicode-bidi: embed;
+    line-height: 2;
+    text-align: center;
+    display: block;
+    margin: 0.5rem auto;
+    font-weight: 500;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
   }
 `;
 
-const QuoteIcon = styled.span`
+const QuoteIcon = styled(motion.span)`
   color: #E50914;
-  font-size: 1.6rem;
+  font-size: 1.5rem;
   display: inline-block;
-  margin: 0 0.5rem;
+  margin: 0 0.4rem;
   vertical-align: text-top;
   text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  filter: drop-shadow(0 0 5px rgba(229, 9, 20, 0.5));
 `;
 
 const DetailsCard = styled(motion.div)`
-  background: rgba(18, 18, 18, 0.8);
+  background: rgba(18, 18, 18, 0.9);
   border-radius: 12px;
   padding: 1.8rem;
   width: 100%;
   height: 100%;
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
   border: 1px solid rgba(70, 70, 70, 0.4);
-  transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   display: flex;
   flex-direction: column;
+  position: relative;
+  overflow: hidden;
   
   &:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5);
-    background: rgba(25, 25, 25, 0.9);
+    transform: translateY(-8px);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+    background: rgba(25, 25, 25, 0.95);
+    border-color: rgba(100, 100, 100, 0.5);
+  }
+  
+  &:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 100%;
+    height: 5px;
+    background: linear-gradient(to left, #E50914, transparent);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+  
+  &:hover:before {
+    opacity: 1;
   }
 `;
 
@@ -650,16 +873,10 @@ const StudentProfile = () => {
           series: '23',
           section: 'A',
           status: 'Active',
-          email: `${studentId.toLowerCase()}@eeeflix.edu`,
+          email: foundStudent.contactInfo?.email || `${studentId.toLowerCase()}@eeeflix.edu`,
           phone: foundStudent.contactInfo?.phone || mockPhone,
           address: 'University Campus, Building C',
           facebook: foundStudent.contactInfo?.facebook || facebookProfileUrl,
-          quote: "Electrical engineering is not just a profession, it's a way of thinking.",
-          achievements: [
-            { name: "Dean's List" },
-            { name: "Honor Roll" },
-            { name: "Outstanding Performance" }
-          ]
         };
         
         console.log("Student data:", enrichedStudent);
@@ -767,36 +984,66 @@ const StudentProfile = () => {
         }}
         onMouseEnter={playHoverSound}
         variants={itemVariants}
-        whileHover={{ scale: 1.1, backgroundColor: "rgba(229, 9, 20, 0.8)" }}
-        whileTap={{ scale: 0.95 }}
+        whileHover={{ scale: 1.25, rotate: -10, backgroundColor: "rgba(229, 9, 20, 0.9)" }}
+        whileTap={{ scale: 0.85, rotate: 0 }}
+        animate={{ 
+          scale: [1, 1.05, 1],
+          transition: { duration: 2, repeat: Infinity, repeatType: "reverse" }
+        }}
       >
         <FaArrowLeft />
       </BackButton>
       
       <ProfileCard 
-        variants={itemVariants}
-        whileHover={{ y: -5, boxShadow: "0 20px 50px rgba(0, 0, 0, 0.8)" }}
+        initial="initial"
+        whileHover="hover"
+        variants={cardHoverVariants}
+        animate={{ 
+          boxShadow: ["0 20px 50px rgba(0, 0, 0, 0.8)", "0 25px 60px rgba(229, 9, 20, 0.2), 0 25px 60px rgba(0, 0, 0, 0.8)", "0 20px 50px rgba(0, 0, 0, 0.8)"],
+          transition: { duration: 5, repeat: Infinity, repeatType: "reverse" }
+        }}
       >
-        <AvatarOuterContainer variants={itemVariants}>
+        <AvatarOuterContainer 
+          variants={itemVariants}
+          initial={{ scale: 0.8, opacity: 0, y: 20 }}
+          animate={{ 
+            scale: 1, 
+            opacity: 1,
+            y: 0,
+            transition: {
+              type: "spring",
+              stiffness: 400,
+              damping: 15,
+              delay: 0.4
+            }
+          }}
+          {...floatAnimation}
+        >
           <AvatarGlow 
             animate={{ 
-              opacity: [0.5, 0.8, 0.5], 
-              scale: [1, 1.1, 1] 
+              opacity: [0.5, 0.9, 0.5], 
+              scale: [1, 1.15, 1],
+              filter: ["blur(10px)", "blur(15px)", "blur(10px)"]
             }}
             transition={{ 
-              duration: 3, 
+              duration: 4, 
               repeat: Infinity,
-              repeatType: "mirror" 
+              repeatType: "mirror",
+              ease: "easeInOut"
             }}
           />
           <AvatarContainer
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.98 }}
+            whileHover={{ scale: 1.12, boxShadow: "0 0 40px rgba(229, 9, 20, 0.8)" }}
+            whileTap={{ scale: 0.95 }}
+            animate={{ 
+              boxShadow: ["0 0 25px rgba(229, 9, 20, 0.4)", "0 0 35px rgba(229, 9, 20, 0.7)", "0 0 25px rgba(229, 9, 20, 0.4)"],
+              transition: { duration: 3, repeat: Infinity, repeatType: "mirror" }
+            }}
           >
             {student && student.image ? (
               <img 
                 src={student.image} 
-                alt={student.name} 
+                alt={student.name}
                 style={{ 
                   width: '100%', 
                   height: '100%', 
@@ -822,10 +1069,23 @@ const StudentProfile = () => {
             )}
           </AvatarContainer>
           <StatusBadge
-            initial={{ scale: 0, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            transition={{ delay: 0.5, type: "spring" }}
-            whileHover={{ scale: 1.1 }}
+            initial={{ scale: 0, opacity: 0, rotateZ: -10 }}
+            animate={{ 
+              scale: 1, 
+              opacity: 1,
+              rotateZ: 0,
+              transition: {
+                delay: 0.9,
+                type: "spring",
+                stiffness: 500,
+                damping: 15
+              }
+            }}
+            whileHover={{ 
+              scale: 1.2, 
+              rotateZ: 5,
+              boxShadow: "0 8px 20px rgba(229, 9, 20, 0.6)"
+            }}
           >
             EEE
           </StatusBadge>
@@ -833,52 +1093,117 @@ const StudentProfile = () => {
         
         <StudentName 
           variants={itemVariants}
-          whileHover={{ scale: 1.03, transition: { duration: 0.2 } }}
+          initial={{ opacity: 0, y: 30, filter: "blur(10px)" }}
+          animate={{ 
+            opacity: 1, 
+            y: 0,
+            filter: "blur(0px)",
+            transition: {
+              delay: 0.6,
+              duration: 0.7,
+              ease: [0.25, 0.1, 0.25, 1.0]
+            }
+          }}
+          whileHover={{ scale: 1.05, letterSpacing: "1.5px", textShadow: "0 0 15px rgba(229, 9, 20, 0.5)" }}
         >
           {student.name}
         </StudentName>
+        
         <StudentId 
           variants={itemVariants}
+          initial={{ opacity: 0, y: 30, filter: "blur(8px)" }}
+          animate={{ 
+            opacity: 1, 
+            y: 0,
+            filter: "blur(0px)",
+            transition: {
+              delay: 0.7,
+              duration: 0.7
+            }
+          }}
+          whileHover={{ letterSpacing: "2px" }}
         >
           ID: {student.id}
         </StudentId>
         
-        <AchievementsContainer variants={itemVariants}>
-          {student.achievements.map((achievement, index) => (
-            <AchievementBadge
-              key={index}
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ delay: 0.8 + (index * 0.1) }}
-              whileHover={{ scale: 1.1, y: -3 }}
-              whileTap={{ scale: 0.95 }}
-            >
-              {index === 0 ? <FaStar /> : index === 1 ? <FaGraduationCap /> : <FaAward />} {achievement.name}
-            </AchievementBadge>
-          ))}
-        </AchievementsContainer>
-        
         <QuoteContainer 
           variants={itemVariants}
-          animate={{
-            backgroundPosition: ['0% 0%', '100% 0%', '0% 0%'],
+          initial={{ opacity: 0, scale: 0.9, rotateX: 20, y: 30 }}
+          animate={{ 
+            opacity: 1, 
+            scale: 1, 
+            rotateX: 0,
+            y: 0,
+            transition: {
+              delay: 0.8,
+              duration: 0.7,
+              type: "spring",
+              stiffness: 100,
+              damping: 15
+            }
           }}
-          transition={{
-            duration: 15,
-            repeat: Infinity,
-            ease: "linear"
+          whileHover={{ 
+            scale: 1.05, 
+            boxShadow: "0 20px 50px rgba(0, 0, 0, 0.7), 0 0 20px rgba(229, 9, 20, 0.4)",
+            rotateX: 8,
+            border: "1px solid rgba(229, 9, 20, 0.5)" 
           }}
-          whileHover={{ scale: 1.02, boxShadow: "0 10px 25px rgba(0, 0, 0, 0.4)" }}
         >
-          <QuoteIcon>❝</QuoteIcon>
-          {student.quote || "Electricity is the power that fuels our future"}
-          <QuoteIcon>❞</QuoteIcon>
+          <QuoteIcon
+            initial={{ opacity: 0, scale: 0 }}
+            animate={{ 
+              opacity: 1, 
+              scale: 1,
+              transition: { delay: 0.8, duration: 0.3 }
+            }}
+          >❝</QuoteIcon>
+          <span lang="bn" style={{ 
+            display: 'block', 
+            padding: '0.75rem 0.5rem', 
+            textAlign: 'center', 
+            width: '100%',
+            fontWeight: 500,
+            letterSpacing: '0.03em',
+            textShadow: '0 1px 2px rgba(0, 0, 0, 0.3)'
+          }}>
+            {student.quote || "Electricity is the power that fuels our future"}
+          </span>
+          <QuoteIcon
+            initial={{ opacity: 0, scale: 0 }}
+            animate={{ 
+              opacity: 1, 
+              scale: 1,
+              transition: { delay: 0.9, duration: 0.3 }
+            }}
+          >❞</QuoteIcon>
+          <div style={{ 
+            marginTop: '0.5rem', 
+            fontSize: '0.8rem', 
+            opacity: 0.9,
+            fontStyle: 'italic',
+            letterSpacing: '0.5px'
+          }}>
+            — Student of RUET EEE Section A
+          </div>
         </QuoteContainer>
         
         <ProfileSections>
           <InfoSection 
             variants={itemVariants}
-            whileHover={{ y: -5, boxShadow: "0 12px 30px rgba(0, 0, 0, 0.5)" }}
+            initial={{ opacity: 0, x: -40, filter: "blur(8px)" }}
+            animate={{ 
+              opacity: 1, 
+              x: 0,
+              filter: "blur(0px)",
+              transition: {
+                delay: 0.9,
+                duration: 0.7,
+                type: "spring",
+                stiffness: 100,
+                damping: 15
+              }
+            }}
+            whileHover={{ y: -12, scale: 1.02, boxShadow: "0 25px 50px rgba(0, 0, 0, 0.6)" }}
           >
             <SectionTitle>
               <FaAddressCard /> Contact Information
@@ -893,7 +1218,17 @@ const StudentProfile = () => {
               <InfoItem>
                 <FaMapMarkerAlt /> University Campus, Building C
               </InfoItem>
-              <SocialLinks>
+              <SocialLinks
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ 
+                  opacity: 1, 
+                  y: 0,
+                  transition: {
+                    delay: 1.0,
+                    duration: 0.5
+                  }
+                }}
+              >
                 <SocialLink 
                   href={student.facebook} 
                   target="_blank"
@@ -902,6 +1237,17 @@ const StudentProfile = () => {
                   onMouseEnter={playHoverSound}
                   whileHover={{ scale: 1.2, rotate: 5 }}
                   whileTap={{ scale: 0.9 }}
+                  initial={{ opacity: 0, scale: 0 }}
+                  animate={{ 
+                    opacity: 1, 
+                    scale: 1,
+                    transition: {
+                      delay: 1.1,
+                      duration: 0.4,
+                      type: "spring",
+                      stiffness: 300
+                    }
+                  }}
                 >
                   <FaFacebookF />
                 </SocialLink>
@@ -913,6 +1259,17 @@ const StudentProfile = () => {
                   onMouseEnter={playHoverSound}
                   whileHover={{ scale: 1.2, rotate: 5 }}
                   whileTap={{ scale: 0.9 }}
+                  initial={{ opacity: 0, scale: 0 }}
+                  animate={{ 
+                    opacity: 1, 
+                    scale: 1,
+                    transition: {
+                      delay: 1.2,
+                      duration: 0.4,
+                      type: "spring",
+                      stiffness: 300
+                    }
+                  }}
                 >
                   <FaInstagram />
                 </SocialLink>
@@ -922,7 +1279,20 @@ const StudentProfile = () => {
           
           <DetailsCard
             variants={itemVariants}
-            whileHover={{ y: -5, boxShadow: "0 12px 30px rgba(0, 0, 0, 0.5)" }}
+            initial={{ opacity: 0, x: 40, filter: "blur(8px)" }}
+            animate={{ 
+              opacity: 1, 
+              x: 0,
+              filter: "blur(0px)",
+              transition: {
+                delay: 0.9,
+                duration: 0.7,
+                type: "spring",
+                stiffness: 100,
+                damping: 15
+              }
+            }}
+            whileHover={{ y: -12, scale: 1.02, boxShadow: "0 25px 50px rgba(0, 0, 0, 0.6)" }}
           >
             <SectionTitle>
               <FaUserGraduate /> Academic Profile
